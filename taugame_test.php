@@ -61,3 +61,7 @@ foreach($cards as $key => $card) {
 $image_big->writeImage("taugame_site_big.png");
 $image_small->writeImage("taugame_site_small.png");
 // TODO - jpgs
+$image_big->setImageFormat('jpg');
+$image_big->writeImage("taugame_site_big.jpg");
+$image_small->setImageFormat('jpg');
+$image_small->writeImage("taugame_site_small.jpg");
