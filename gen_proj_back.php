@@ -2,7 +2,7 @@
 
 define('CARD_WIDTH', 825);
 define('CARD_HEIGHT', 1125);
-define('CARD_BACKGROUND_COLOUR', '#EDEDED');
+define('CARD_BACKGROUND_COLOUR', 'none');
 define('OUTPUT', 'ptau_back.png');
 define('LINE_WIDTH', 100);
 

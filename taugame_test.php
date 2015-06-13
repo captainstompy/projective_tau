@@ -58,10 +58,10 @@ foreach($cards as $key => $card) {
 	$image_small->compositeImage($card_image, Imagick::COMPOSITE_DEFAULT, $key*80, 0);
 }
 
-$image_big->writeImage("taugame_site_big.png");
-$image_small->writeImage("taugame_site_small.png");
+$image_big->writeImage("projcardsnew@2x.png");
+$image_small->writeImage("projcardsnew.png");
 // TODO - jpgs
 $image_big->setImageFormat('jpg');
-$image_big->writeImage("taugame_site_big.jpg");
+$image_big->writeImage("projcardsnew@2x.jpg");
 $image_small->setImageFormat('jpg');
-$image_small->writeImage("taugame_site_small.jpg");
+$image_small->writeImage("projcardsnew.jpg");

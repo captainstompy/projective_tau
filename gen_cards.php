@@ -2,17 +2,11 @@
 
 define('CARD_WIDTH', 825);
 define('CARD_HEIGHT', 1125);
-define('CARD_BACKGROUND_COLOUR', '#FFFFFF');
+define('CARD_BACKGROUND_COLOUR', 'none');
 define('CARD_DEBUG', false);
 define('CARD_WRITE_LOCATION', "cards/");
 define('LINE_WIDTH', 100);
 
-// TODO - better colours
-/*
-define('COLOUR_ONE', '#000000');
-define('COLOUR_TWO', '#FF0000');
-define('COLOUR_THREE', '#00FF00');
-*/
 define('COLOUR_ONE', 'rgb(239,91,136)');
 define('COLOUR_TWO', 'rgb(126,206,210)');
 define('COLOUR_THREE', 'rgb(195,153,107)');
@@ -41,18 +35,28 @@ class Card {
 	public function genCard() {
 		$draw = new ImagickDraw();
 		$draw->setStrokeOpacity(1);
+		$draw->setStrokeAlpha(0);
 
 		if ($this->lines) {
 			$draw->setFillColor($this->lines->getColour());
 			$line_points = $this->lines->getCoordinates();
-			$draw->rectangle($line_points['start']['x'], $line_points['start']['y'], $line_points['end']['x'], $line_points['end']['y']);
-			$draw->rectangle(CARD_WIDTH - $line_points['start']['x'], $line_points['start']['y'], CARD_WIDTH - $line_points['end']['x'], $line_points['end']['y']);
+      $corner_radius = LINE_WIDTH / 2;
+      $draw->roundRectangle(
+        $line_points['start']['x'], $line_points['start']['y'],
+        $line_points['end']['x'], $line_points['end']['y'],
+        $corner_radius, $corner_radius);
+      $draw->roundRectangle(
+        CARD_WIDTH - $line_points['end']['x'], $line_points['start']['y'],
+        CARD_WIDTH - $line_points['start']['x'], $line_points['end']['y'],
+        $corner_radius, $corner_radius);
 		}
 
 		if ($this->circle) {
 			$draw->setFillColor($this->circle->getColour());
 			$circle_points = $this->circle->getCoordinates();
-			$draw->circle($circle_points['origin']['x'], $circle_points['origin']['y'], $circle_points['final']['x'], $circle_points['final']['y']);
+      $draw->circle(
+        $circle_points['origin']['x'], $circle_points['origin']['y'],
+        $circle_points['final']['x'], $circle_points['final']['y']);
 		}
 
 		if ($this->triangles) {
@@ -103,7 +107,7 @@ class Card {
 }
 
 class Shape {
-	private static $shape_buffer = 30;
+	private static $shape_buffer = 30 + LINE_WIDTH / 2;
 	private static $shape_border_reference;
 	// TODO - maybe make the others extend this and have it by default
 	public static function getShapeBuffer() {
@@ -123,7 +127,7 @@ class Lines {
 
 	public static function getBorderReference() {
 		if (!isset(Lines::$line_border_reference)) {
-			 Lines::$line_border_reference = CARD_WIDTH / 3;
+			 Lines::$line_border_reference = CARD_WIDTH / 3 - LINE_WIDTH / 2;
 		}
 		return Lines::$line_border_reference;
 	}
@@ -138,8 +142,14 @@ class Lines {
 
 	public function getCoordinates() {
 		return array(
-			'start'=> array('x'=>Lines::getBorderReference() - LINE_WIDTH, 'y'=>0),
-			'end'  => array('x'=>Lines::getBorderReference(), 'y'=>CARD_HEIGHT)
+      'start'=> array(
+        'x'=>Lines::getBorderReference() - LINE_WIDTH,
+        'y'=>Triangles::top() - LINE_WIDTH / 2
+      ),
+      'end'  => array(
+        'x'=>Lines::getBorderReference(),
+        'y'=>CARD_HEIGHT - Triangles::top() + LINE_WIDTH / 2
+      )
 		);
 	}
 }
@@ -187,6 +197,11 @@ class Triangles {
 	public function getColour() {
 		return $this->colour;
 	}
+
+  public function top() {
+    $triangle_line_length = CARD_WIDTH - 2*(Lines::getBorderReference() + Shape::getShapeBuffer());
+    return CARD_HEIGHT / 4 - (1.73 / 2 * $triangle_line_length)/2;
+  }
 
 	public function getCoordinates() {
 		$triangle_line_length = CARD_WIDTH - 2*(Lines::getBorderReference() + Shape::getShapeBuffer());
