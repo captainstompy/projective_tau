@@ -2,8 +2,8 @@
 
 define('CARD_WIDTH', 825);
 define('CARD_HEIGHT', 1125);
-define('CARD_BACKGROUND_COLOUR', 'none');
-define('OUTPUT', 'ptau_back.png');
+define('CARD_BACKGROUND_COLOUR', '#E2E2E2');
+define('OUTPUT', 'ptau_back_drivethru.png');
 define('LINE_WIDTH', 100);
 
 $colours = [

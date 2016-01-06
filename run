@@ -1,0 +1,3 @@
+[[ -d cards ]] || mkdir cards
+[[ -d cards_exp ]] || mkdir cards_exp && mkdir cards_exp/cards
+[[ -d cards_cmyk ]] || mkdir cards_cmyk

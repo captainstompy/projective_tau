@@ -1,11 +1,15 @@
 <?php
 
-define('CARD_WIDTH', 825);
-define('CARD_HEIGHT', 1125);
-define('CARD_BACKGROUND_COLOUR', 'none');
+#define('CARD_WIDTH', 825);
+#define('CARD_HEIGHT', 1125);
+define('CARD_WIDTH', 164);
+define('CARD_HEIGHT', 224);
+define('CARD_BACKGROUND_COLOUR', 'white');
 define('CARD_DEBUG', false);
-define('CARD_WRITE_LOCATION', "cards/");
-define('LINE_WIDTH', 100);
+#define('CARD_WRITE_LOCATION', "cards_drivethru/");
+define('CARD_WRITE_LOCATION', "cards_small/");
+#define('LINE_WIDTH', 100);
+define('LINE_WIDTH', 20);
 
 define('COLOUR_ONE', 'rgb(239,91,136)');
 define('COLOUR_TWO', 'rgb(126,206,210)');
@@ -13,8 +17,8 @@ define('COLOUR_THREE', 'rgb(195,153,107)');
 
 $debug = true;
 
-$full_width = 825;
-$full_height = 1125;
+$full_width = 822;
+$full_height = 1122;
 $bleedetc = 36;
 
 class Card {
@@ -107,7 +111,7 @@ class Card {
 }
 
 class Shape {
-	private static $shape_buffer = 30 + LINE_WIDTH / 2;
+	private static $shape_buffer = 6 + LINE_WIDTH / 2;
 	private static $shape_border_reference;
 	// TODO - maybe make the others extend this and have it by default
 	public static function getShapeBuffer() {
