@@ -1,11 +1,21 @@
 <?php
 
-define('CARD_WIDTH', 825);
-define('CARD_HEIGHT', 1125);
-define('CARD_BACKGROUND_COLOUR', 'none');
+if (count($argv) > 1 && $argv[1] == "small") {
+	define('CARD_WIDTH', 164);
+	define('CARD_HEIGHT', 224);
+	define('LINE_WIDTH', 20);
+	define('CARD_WRITE_LOCATION', "cards_drivethru_small/");
+	define('MAGIC', 6);
+} else {
+	define('CARD_WIDTH', 825);
+	define('CARD_HEIGHT', 1125);
+	define('LINE_WIDTH', 100);
+	define('CARD_WRITE_LOCATION', "cards_drivethru/");
+	define('MAGIC', 30);
+}
+
+define('CARD_BACKGROUND_COLOUR', '#FFFFFF');
 define('CARD_DEBUG', false);
-define('CARD_WRITE_LOCATION', "cards/");
-define('LINE_WIDTH', 100);
 
 define('COLOUR_ONE', 'rgb(239,91,136)');
 define('COLOUR_TWO', 'rgb(126,206,210)');
@@ -34,7 +44,7 @@ class Card {
 
 	public function genCard() {
 		$draw = new ImagickDraw();
-		$draw->setStrokeOpacity(1);
+		#$draw->setStrokeOpacity(1);
 		$draw->setStrokeAlpha(0);
 
 		if ($this->lines) {
@@ -107,7 +117,7 @@ class Card {
 }
 
 class Shape {
-	private static $shape_buffer = 30 + LINE_WIDTH / 2;
+	private static $shape_buffer = MAGIC + LINE_WIDTH / 2;
 	private static $shape_border_reference;
 	// TODO - maybe make the others extend this and have it by default
 	public static function getShapeBuffer() {

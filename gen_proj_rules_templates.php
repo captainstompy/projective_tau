@@ -15,27 +15,29 @@ $colours = [
 
 function drawVLine($back, $x, $c) {
   $draw = new ImagickDraw();
-  $draw->setStrokeColor($c);
+  #$draw->setStrokeColor($c);
   $draw->setFillColor($c);
-  $draw->setStrokeAlpha(1);
-  $draw->setFillAlpha(1);
+  $draw->setStrokeWidth(0);
+  $draw->setStrokeAlpha(0);
+  #$draw->setFillAlpha(1);
   $draw->rectangle($x, 0, $x + LINE_WIDTH, CARD_HEIGHT);
   $back->drawImage($draw);
 }
 
 function drawHLine($back, $y, $c) {
   $draw = new ImagickDraw();
-  $draw->setStrokeColor($c);
+  #$draw->setStrokeColor($c);
   $draw->setFillColor($c);
-  $draw->setStrokeAlpha(1);
-  $draw->setFillAlpha(1);
+  $draw->setStrokeWidth(0);
+  $draw->setStrokeAlpha(0);
+  #$draw->setFillAlpha(1);
   $draw->rectangle(0, $y, CARD_WIDTH, $y + LINE_WIDTH);
   $back->drawImage($draw);
 }
 
 function drawNumber($back, $i) {
   $number = new Imagick();
-  $number->newImage(CARD_WIDTH, CARD_HEIGHT, 'none');
+  $number->newImage(CARD_WIDTH, CARD_HEIGHT, '#FFFFFF');
   $draw = new ImagickDraw();
   $draw->setFont("Kefa-Bold");
   $draw->setFontSize(100);
@@ -53,7 +55,7 @@ function drawCard($i, $j, $t, $colours) {
   $back->newImage(CARD_WIDTH, CARD_HEIGHT, CARD_BACKGROUND_COLOUR);  
   drawHLine($back, 100, $colours[$j - 1]);
   drawVLine($back, 100, $colours[$i - 1]);
-  drawNumber($back, $t);
+  #drawNumber($back, $t);
 
   if (DEBUG) {
     $draw = new ImagickDraw();

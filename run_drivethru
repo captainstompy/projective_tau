@@ -1,0 +1,11 @@
+mkdir cards_drivethru
+mkdir cards_drivethru_small
+php56 gen_cards.php
+php56 gen_cards.php small
+php56 gen_proj_rules_templates.php
+php56 gen_proj_back.php
+mogrify -format tif cards_drivethru/*.png
+mogrify -format tif cards_drivethru_small/*.png
+mogrify -format tif rules*.png
+mogrify -format tif ptau_back.png
+python gen_csv.py cards_drivethru tif ptau_back_drivethru.tif rules1.tif rules2.tif rules3.tif > images.csv
